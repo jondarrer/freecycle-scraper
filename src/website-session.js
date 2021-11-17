@@ -1,5 +1,5 @@
 import WebsiteRequest from './website-request';
-import CookieHelper from './cookie-helper';
+import CookieHelper from './utils/cookie-helper';
 require('./types');
 
 /**

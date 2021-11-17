@@ -1,8 +1,9 @@
-var webpack = require('webpack');
-var path = require('path');
-var fs = require('fs');
+const webpack = require('webpack');
+const path = require('path');
+const fs = require('fs');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
-var nodeModules = {};
+const nodeModules = {};
 fs.readdirSync('node_modules')
   .filter(function(x) {
     return ['.bin'].indexOf(x) === -1;
@@ -25,28 +26,18 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        enforce: 'pre',
-        loader: 'eslint-loader',
-        options: {
-          emitWarning: true,
-        },
-      },
-      {
-        test: /\.jsx?$/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
-            plugins: ['@babel/plugin-transform-runtime'],
-          },
-        },
+        test: /\.(js|jsx)$/,
+        use: ['babel-loader'],
+        include: path.resolve(__dirname, 'src'),
         exclude: /node_modules/,
       },
     ],
   },
   externals: nodeModules,
   plugins: [
+    new ESLintPlugin({
+      emitWarning: true,
+    }),
     new webpack.BannerPlugin({
       banner: 'require("source-map-support").install();',
       raw: true,

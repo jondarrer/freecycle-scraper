@@ -1,4 +1,4 @@
-require('./types');
+require('../types');
   
 /**
  * @class Get cookie/cookies helper methods
@@ -42,4 +42,6 @@ class CookieHelper {
 }
 
 export default CookieHelper;
+const getCookies = CookieHelper.getCookies;
+export { getCookies };
   
